@@ -30,25 +30,44 @@ app.get('/api-docs.json', function(req, res){
 
 /**
  * @swagger
+ * definitions:
+ *   loginRequest:
+ *     description: "ログイン情報"
+ *     type: object
+ *     properties:
+ *       username:
+ *         description: "ユーザー名"
+ *         type: string
+ *         example: username
+ *       password:
+ *         description: "パスワード名"
+ *         type: string
+ *         example: password
+ *     required:
+ *     - username
+ *     - password
+ */
+/**
+ * @swagger
  * /login:
  *   post:
  *     description: Login to the application
+ *     consumes:
+ *     - application/json
  *     produces:
- *       - application/json
+ *     - application/json
  *     parameters:
- *       - name: username
- *         description: Username to use for login.
- *         in: formData
- *         required: true
- *         type: string
- *       - name: password
- *         description: User's password.
- *         in: formData
- *         required: true
- *         type: string
+ *     - in: body
+ *       name: body
+ *       description: Username and password from login.
+ *       required: true
+ *       schema:
+ *         $ref: "#/definitions/loginRequest"
  *     responses:
  *       200:
  *         description: login
+ *       500:
+ *         description: "Server Error"
  */
 app.post('/login', function(req, res) {
   res.status(200).json(req.body);
